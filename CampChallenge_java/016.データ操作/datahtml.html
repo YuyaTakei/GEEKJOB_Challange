@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>入力フィールド</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="./Data.jsp" method="post">
+            名前
+            <input type="text" name="txtName">
+            <br>性別:　男
+            <!-- radioの名前が同じものを作るとボタンを選択式に出来るようだ -->
+            <input type="radio" name="radioGend" value="man" checked="">
+            女
+            <input type="radio" name="radioGend" value="woman">
+            <br>趣味
+            <textarea name="mulProfile"></textarea>
+            <input type="submit" name="btnSubmit">
+
+
+        </form>
+    </body>
+</html>
