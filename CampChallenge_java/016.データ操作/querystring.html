@@ -1,0 +1,23 @@
+<!--せっかくなので入力フォームを作成-->
+<html>
+    <head>
+        <title>クエリストリング課題</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="./querystring.jsp" method="get">
+            雑貨
+            <input type="radio" name="type" value=1 checked=""><br>
+            生鮮食品
+            <input type="radio" name="type" value=2><br>
+            その他
+            <input type="radio" name="type" value=3><br>
+            個数
+            <input type="text" name="count"><br>
+            総額
+            <input type="text" name="total"><br>
+            <button type="submit" value="some_value">送信</button>
+        </form>
+    </body>
+</html>
