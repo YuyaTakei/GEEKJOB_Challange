@@ -12,8 +12,6 @@ switch(Integer.valueOf(request.getParameter("type"))){
         out.print("その他");
         break;
 }
-//totalとcountにIntegerに値するものが入ってなかったときのtry catch文を書きたい
-//あとでやろうね
 int i = Integer.valueOf(request.getParameter("total"));
 int j = Integer.valueOf(request.getParameter("count"));
 out.print("<br>"+"総額:"+i+"円　個数:"+j+"<br>");
