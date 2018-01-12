@@ -27,8 +27,8 @@ public class jdbc6 extends HttpServlet {
                 db_st.executeUpdate();
                 out.print("削除を完了しました<br>");
                 
-                db_st2 = db_con.prepareStatement("SELECT * FROM profiles");
-                db_data = db_st2.executeQuery();
+                db_st = db_con.prepareStatement("SELECT * FROM profiles");
+                db_data = db_st.executeQuery();
                 while(db_data.next()){
                     out.print("ID:"+db_data.getInt("profilesID")+"<br>");
                     out.print("名前:"+db_data.getString("name")+"<br>");
@@ -37,6 +37,7 @@ public class jdbc6 extends HttpServlet {
                     out.print("生年月日"+db_data.getString("birthday")+"<br>");
                 }
                 db_data.close();
+                
                 db_st.close();
                 db_con.close();
             } catch (SQLException e_sql) {
