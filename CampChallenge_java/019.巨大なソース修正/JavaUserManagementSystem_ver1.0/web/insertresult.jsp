@@ -1,6 +1,11 @@
+<%@page import="jums.UserDataBeans"%>
+<%@page import="jums.JumsHelper"%>
 <%@page import="javax.servlet.http.HttpSession" %>
 <%
     HttpSession hs = request.getSession();
+    UserDataBeans ub = (UserDataBeans) hs.getAttribute("userbeans");
+    //セッションをクリア
+    hs.invalidate();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,11 +16,13 @@
     </head>
     <body>
         <h1>登録結果</h1><br>
-        名前:<%= hs.getAttribute("name")%><br>
-        生年月日:<%= hs.getAttribute("year")+"年"+hs.getAttribute("month")+"月"+hs.getAttribute("day")+"日"%><br>
-        種別:<%= hs.getAttribute("type")%><br>
-        電話番号:<%= hs.getAttribute("tell")%><br>
-        自己紹介:<%= hs.getAttribute("comment")%><br>
+        名前:<%= ub.getName()%><br>
+        生年月日:<%= ub.getYear() +"年"+ ub.getMonth() +"月"+ub.getDay()+"日"%><br>
+        種別:<%= ub.getType()%><br>
+        電話番号:<%= ub.getTell()%><br>
+        自己紹介:<%= ub.getComment()%><br>
         以上の内容で登録しました。<br>
+        <br>
+        <%= JumsHelper.getInstance().home() %>
     </body>
 </html>

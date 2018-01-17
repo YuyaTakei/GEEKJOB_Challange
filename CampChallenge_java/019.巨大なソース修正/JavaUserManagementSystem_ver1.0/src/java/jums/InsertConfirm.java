@@ -30,6 +30,9 @@ public class InsertConfirm extends HttpServlet {
             HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
             String accesschk = request.getParameter("ac");
+            
+            UserDataBeans userbeans = new UserDataBeans();
+            
             if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
                 throw new Exception("不正なアクセスです");
             }
@@ -39,19 +42,21 @@ public class InsertConfirm extends HttpServlet {
             String year = request.getParameter("year");
             String month = request.getParameter("month");
             String day = request.getParameter("day");
-            String type = request.getParameter("type");
+            int type = Integer.parseInt(request.getParameter("type"));
             String tell = request.getParameter("tell");
             String comment = request.getParameter("comment");
 
-            //セッションに格納
-            session.setAttribute("name", name);
-            session.setAttribute("year", year);
-            session.setAttribute("month",month);
-            session.setAttribute("day", day);
-            session.setAttribute("type", type);
-            session.setAttribute("tell", tell);
-            session.setAttribute("comment", comment);
-            System.out.println("Session updated!!");
+            userbeans.setName(name);
+            userbeans.setYear(year);
+            userbeans.setMonth(month);
+            userbeans.setDay(day);
+            userbeans.setType(type);
+            userbeans.setTell(tell);
+            userbeans.setComment(comment);
+            
+            System.out.println("UserDataBeans updated");
+            
+            session.setAttribute("userbeans", userbeans);
             
             request.getRequestDispatcher("/insertconfirm.jsp").forward(request, response);
         }catch(Exception e){

@@ -9,6 +9,8 @@
     <h1>ユーザー情報管理トップ</h1><br>
     <h3>ここでは、ユーザー情報管理システムとしてユーザー情報の登録や検索、
         付随して修正や削除を行うことができます</h3><br>
+        <%HttpSession reset = request.getSession();
+        reset.invalidate();%>
     <a href="insert">新規登録</a><br>
     <a href="" >検索(修正・削除)</a><br>
 </body>
