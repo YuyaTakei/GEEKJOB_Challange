@@ -1,8 +1,10 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="jums.JumsHelper"
         import="jums.UserDataDTO" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
-    UserDataDTO udd = (UserDataDTO)request.getAttribute("resultData");
+    ArrayList<UserDataDTO> resultList = (ArrayList)request.getAttribute("resultList");
+    HttpSession hs = request.getSession();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,12 +22,17 @@
                 <th>種別</th>
                 <th>登録日時</th>
             </tr>
+            <% 
+                for(int j=0; j<resultList.size(); j++){
+                     UserDataDTO udd = (UserDataDTO)resultList.get(j);
+            %>
             <tr>
-                <td><a href="ResultDetail?id=<%= udd.getUserID()%>"><%= udd.getName()%></a></td>
+                <td nowrap><a href="ResultDetail?id=<%= udd.getUserID() %>&ac=<%= hs.getAttribute("ac")%>"><%= udd.getName()%></a></td>
                 <td><%= udd.getBirthday()%></td>
                 <td><%= udd.getType()%></td>
                 <td><%= udd.getNewDate()%></td>
             </tr>
+            <% } %>
         </table>
     </body>
     <%=jh.home()%>

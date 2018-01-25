@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,21 +25,41 @@ public class UpdateResult extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession();
+        UserDataDTO udd = (UserDataDTO)session.getAttribute("resultData");
+
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdateResult</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdateResult at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+
+            String accesschk = request.getParameter("ac");
+            if (accesschk == null || (Integer) session.getAttribute("ac") != Integer.parseInt(accesschk)) {
+                throw new Exception("不正なアクセスです");
+            }
+        
+            UserDataBeans udb = new UserDataBeans();
+            udb.setName(request.getParameter("name"));
+            udb.setYear(request.getParameter("year"));
+            udb.setMonth(request.getParameter("month"));
+            udb.setDay(request.getParameter("day"));
+            udb.setType(request.getParameter("type"));
+            udb.setTell(request.getParameter("tell"));
+            udb.setComment(request.getParameter("comment"));
+
+            UserDataDTO userdata = new UserDataDTO();
+            udb.UD2DTOMapping(userdata);//ID以外をセットするメソッド
+            userdata.setUserID(udd.getUserID());
+            
+            UserDataDAO.getInstance().update(userdata);
+            
+            session.setAttribute("resultData", userdata);//セッション内のresultData（詳細情報で開かれるヤツ）を、今回更新したもので置き換える
+            
+            request.setAttribute("udb", udb);
+            request.getRequestDispatcher("/updateresult.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

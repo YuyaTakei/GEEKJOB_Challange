@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,13 +27,20 @@ public class ResultDetail extends HttpServlet {
             throws ServletException, IOException {
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
-
+            HttpSession session =request.getSession();
+            
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
-            searchData.setUserID(2);
+            int i = Integer.parseInt(request.getParameter("id"));
+            searchData.setUserID(i);
 
             UserDataDTO resultData = UserDataDAO .getInstance().searchByID(searchData);
-            request.setAttribute("resultData", resultData);
+            session.setAttribute("resultData", resultData);
             
             request.getRequestDispatcher("/resultdetail.jsp").forward(request, response);  
         }catch(Exception e){

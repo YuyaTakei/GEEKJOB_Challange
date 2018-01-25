@@ -1,5 +1,4 @@
-<%@page import="javax.servlet.http.HttpSession"
-        import="jums.JumsHelper"
+<%@page import="jums.JumsHelper"
         import="jums.UserDataBeans" %>
 <%
     JumsHelper jh = JumsHelper.getInstance();
